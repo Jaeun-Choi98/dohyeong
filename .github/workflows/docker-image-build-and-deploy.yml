@@ -3,7 +3,7 @@ name: Docker Build and Deploy
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   build-and-deploy:
@@ -18,10 +18,10 @@ jobs:
         run: docker login -u jaeun -p ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t jaeun/web-dohyeong:${GITHUB_RUN_NUMBER} .
+        run: docker build -t jaeun/web-dohyeong:latest .
 
       - name: Push to Docker Hub
-        run: docker push jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}
+        run: docker push jaeun/web-dohyeong:latest
 
       - name: SSH and run on server
         uses: appleboy/ssh-action@master
@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            docker pull jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}
             docker stop webapp || true
             docker rm webapp || true              
-            docker run -d -p 80:80 --name webapp jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}
+            docker rmi webapp || true
+            docker run -d -p 80:80 -p 8080:8080 --name webapp jaeun/web-dohyeong:latest
