@@ -1,0 +1,64 @@
+/* 기본 스타일 */
+
+/* 게시판 페이지 스타일 */
+body,
+html {
+  height: 100%; /* 화면에 꽉 채우기 */
+  margin: 0;
+}
+
+.board-content {
+  padding: 20px;
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: 1fr; /* 한 열로 표시 */
+  gap: 20px; /* 포스트 사이의 간격 */
+}
+
+.post {
+  padding: 10px;
+  border: 1px solid #ccc; /* 테두리 추가 */
+}
+
+/* 미디어 쿼리를 이용한 반응형 스타일 */
+
+/* 작은 화면(모바일 기기)에 대한 스타일 */
+@media only screen and (max-width: 600px) {
+  .posts {
+    grid-template-columns: 1fr; /* 한 열로 표시 */
+  }
+}
+/* 기본 스타일 */
+
+/* 게시판 페이지 스타일 */
+body,
+html {
+  height: 100%; /* 화면에 꽉 채우기 */
+  margin: 0;
+}
+
+.content {
+  padding: 20px;
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: 1fr; /* 한 열로 표시 */
+  gap: 20px; /* 포스트 사이의 간격 */
+}
+
+.post {
+  padding: 10px;
+  border: 1px solid #ccc; /* 테두리 추가 */
+}
+
+/* 미디어 쿼리를 이용한 반응형 스타일 */
+
+/* 작은 화면(모바일 기기)에 대한 스타일 */
+@media only screen and (max-width: 600px) {
+  .posts {
+    grid-template-columns: 1fr; /* 한 열로 표시 */
+  }
+}

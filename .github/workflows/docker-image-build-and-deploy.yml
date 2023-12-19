@@ -1,0 +1,36 @@
+name: Docker Build and Deploy
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build-and-deploy:
+    if: "!contains(github.event.head_commit.modified, 'README.md')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        run: docker login -u jaeun -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t jaeun/web-dohyeong:${GITHUB_RUN_NUMBER} .
+
+      - name: Push to Docker Hub
+        run: docker push jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}
+
+      - name: SSH and run on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            docker pull jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}
+            docker stop webapp || true
+            docker rm webapp || true              
+            docker run -d -p 80:80 --name webapp jaeun/web-dohyeong:${GITHUB_RUN_NUMBER}

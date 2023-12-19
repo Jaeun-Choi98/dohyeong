@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+## 친구 웹 사이트 만들어 주기 (Develop using react and gin)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 교재 개발을 하는 친구
 
-## Available Scripts
+- 자기pr(간단 소개, 만든 교재)
+- 학생들과 소통할 수 있는 게시판
 
-In the project directory, you can run:
+### 리액트 버전 6 react-router-dom 패키지 바뀐점
+---
+- Switch -> Routes 네이밍 변경
+- exact 옵션 삭제
+- 컴포넌트 렌더링 component, render 속성 네이밍 -> Component, element로 변경
+- URL Params 읽는 법(match객체) -> useParams() 사용
+- Query 읽는 법(location객체) -> useLocation() 사용
+- useHistory(), 리다이렉트 -> useNavigate() 사용
+- Link to 속성 -> to, state로 나눠서 사용
 
-### `npm start`
+<br>
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+---
+- Home 컴포넌트: 자기소개 페이지
+- Book 컴포넌트: 교재 리스트를 보여줄 페이지
+- Board 컴포넌트: 학생들과 소통할 수 있는 페이지
+- Navigation 컴포넌트: 페이지 이동을 위한 상단 메뉴(컴포넌트 라우팅)
+- modalwindows 컴포넌트: 로그인 및 회원가입을 위한 모달 윈도우
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br>
+<br>
 
-### `npm test`
+### Backend 
+---
+#### GET
+- 백엔드는 모든 책 정보를 프론트엔드로 전달한다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### POST
+- 프론트엔드는 백엔드로 사용자 정보를 보내고 로그인하거나 신규 가입한다.
+- 프론트엔드는 백엔드로 로그아웃을 요청한다.
+- 프론트엔드는 백엔드로 책 정보를 보내고 추가한다. (x)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### DELETE
+- 프론트엔드는 백엔드로 특정 책 정보를 보내고 삭제한다. (x)
