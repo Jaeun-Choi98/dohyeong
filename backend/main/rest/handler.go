@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 type HandlerInterface interface{
@@ -25,11 +24,7 @@ type Handler struct{
 }
 
 func NewHandler() (HandlerInterface, error){
-	err := godotenv.Load(".env")
-  if err != nil {
-    log.Fatal("Error loading .env file")
-  }
-	return newHandlerWithParams("mysql","jaeun:cjswo123@tcp(175.45.205.116:3306)/dohyeong")
+	return newHandlerWithParams("mysql","qwe:123qweasdzxc@tcp(175.45.205.116:3306)/dohyeong")
 }
 
 func newHandlerWithParams(dbName, con string)(HandlerInterface, error){
