@@ -9,6 +9,7 @@ RUN npm run build
 FROM golang:latest as go-build
 WORKDIR /app
 COPY backend/ ./
+WORKDIR ./main
 RUN go mod download && CGO_ENABLED=0 GOOS=linux go build -o backend . 
 
 # Stage 3: Nginx를 사용하여 프론트엔드와 백엔드를 결합
