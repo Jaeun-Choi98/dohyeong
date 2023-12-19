@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -30,12 +29,7 @@ func NewHandler() (HandlerInterface, error){
   if err != nil {
     log.Fatal("Error loading .env file")
   }
-	db := os.Getenv("DB")
-	dbName := os.Getenv("DBNAME")
-	dbUser := os.Getenv("DBUSER")
-	dbPassword := os.Getenv("DBPASSWORD")
-	dbIpAndPort := os.Getenv("DBIPANDPORT")
-	return newHandlerWithParams(db,dbUser+":"+ dbPassword + "@tcp" + dbIpAndPort + "/" + dbName)
+	return newHandlerWithParams("mysql","jaeun:cjswo123@tcp(175.45.205.116:3306)/dohyeong")
 }
 
 func newHandlerWithParams(dbName, con string)(HandlerInterface, error){
