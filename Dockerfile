@@ -16,9 +16,4 @@ RUN go mod download && CGO_ENABLED=0 GOOS=linux go build -o goserve
 
 # Stage 3: Nginx를 사용하여 프론트엔드와 백엔드를 결합
 FROM nginx:latest
-USER root
-COPY --from=react-build /app/build /usr/share/nginx/html
-COPY --from=go-build /app/main /usr/share/nginx/html/api
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-ENTRYPOINT nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserve  
+ENTRYPOINT nginx -g 'daemon off'
