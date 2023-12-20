@@ -32,5 +32,5 @@ jobs:
           script: |
             docker stop webapp || true
             docker rm webapp || true              
-            docker rmi webapp || true
+            docker rmi jaeun/web-dohyeong:latest || true
             docker run -d -p 80:80 -p 8080:8080 --name webapp jaeun/web-dohyeong:latest
