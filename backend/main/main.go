@@ -5,5 +5,5 @@ import (
 )
 
 func main(){
-	rest.RunAPI("localhost:8080")
+	rest.RunAPI("175.45.205.116:8080")
 }
