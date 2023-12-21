@@ -20,7 +20,7 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # 디버그용
 RUN apt-get update && apt-get install -y procps
 COPY start.sh /usr/local/bin/
-USER nginx
 RUN chmod +x /usr/local/bin/start.sh
+USER nginx
 
 ENTRYPOINT ["/usr/local/bin/start.sh"]
