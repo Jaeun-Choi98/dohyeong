@@ -19,7 +19,7 @@ COPY --from=go-build /app/main /usr/share/nginx/html/api
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # 디버그용
 RUN apt-get update && apt-get install -y procps
-COPY start.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start.sh
-
-ENTRYPOINT ["/usr/local/bin/start.sh"]
+#COPY start.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/start.sh
+USER nginx
+CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserv
