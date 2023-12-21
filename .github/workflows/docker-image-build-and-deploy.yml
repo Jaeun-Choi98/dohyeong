@@ -33,4 +33,4 @@ jobs:
             docker stop webapp || true
             docker rm webapp || true              
             docker rmi jaeun/web-dohyeong:latest || true
-            docker run -d -p 80:80  --name webapp jaeun/web-dohyeong:latest
+            docker run -d -p 80:80  --name webapp --add-host=host.docker.internal:host-gateway jaeun/web-dohyeong:latest
