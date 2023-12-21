@@ -24,7 +24,7 @@ type Handler struct{
 }
 
 func NewHandler() (HandlerInterface, error){
-	return newHandlerWithParams("mysql","qwe:123qweasdzxc@tcp(175.45.205.116:3306)/dohyeong")
+	return newHandlerWithParams("mysql","qwe:123qweasdzxc@tcp(host.docker.internal)/dohyeong")
 }
 
 func newHandlerWithParams(dbName, con string)(HandlerInterface, error){

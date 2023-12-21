@@ -9,10 +9,10 @@ import (
 func RunAPI(address string) error{
 	h,err := NewHandler()
 	if err != nil{
+		fmt.Print(err)
 		return err
 	}
 	return RunAPIWithHandler(address, h)
-
 }
 
 func RunAPIWithHandler(address string, h HandlerInterface) error{
