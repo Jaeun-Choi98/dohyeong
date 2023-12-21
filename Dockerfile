@@ -17,9 +17,10 @@ FROM nginx:latest
 COPY --from=react-build /app/build /usr/share/nginx/html
 COPY --from=go-build /app/main /usr/share/nginx/html/api
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#COPY nginx/nginx.conf /etc/nginx/nginx.conf
 # 디버그용
 RUN apt-get update && apt-get install -y procps
 #COPY start.sh /usr/local/bin/
 #RUN chmod +x /usr/local/bin/start.sh
-
-CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserv
+USER nginx
+CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserve
