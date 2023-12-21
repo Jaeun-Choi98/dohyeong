@@ -18,7 +18,8 @@ COPY --from=react-build /app/build /usr/share/nginx/html
 COPY --from=go-build /app/main /usr/share/nginx/html/api
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # 디버그용
+RUN apt-get update && apt-get install -y procps
 COPY start.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start.sh
+RUN su - nginx && chmod +x /usr/local/bin/start.sh
 
 ENTRYPOINT ["/usr/local/bin/start.sh"]
