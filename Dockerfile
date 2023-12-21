@@ -21,6 +21,5 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 RUN apt-get update && apt-get install -y procps
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
-USER nginx
 
 ENTRYPOINT ["/usr/local/bin/start.sh"]
