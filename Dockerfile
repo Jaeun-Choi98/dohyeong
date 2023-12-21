@@ -23,5 +23,5 @@ RUN apt-get update && apt-get install -y procps
 #COPY start.sh /usr/local/bin/
 #RUN chmod +x /usr/local/bin/start.sh
 #USER nginx
-CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserve
+CMD nginx -g 'daemon off;'
 #ENTRYPOINT ["/usr/local/bin/start.sh"]
