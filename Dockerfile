@@ -20,8 +20,8 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 #COPY nginx/nginx.conf /etc/nginx/nginx.conf
 # 디버그용
 RUN apt-get update && apt-get install -y procps
-#COPY start.sh /usr/local/bin/
-#RUN chmod +x /usr/local/bin/start.sh
+COPY start.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 #USER nginx
-CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserve
-#ENTRYPOINT ["/usr/local/bin/start.sh"]
+#CMD nginx -g 'daemon off;' & /usr/share/nginx/html/api/goserve
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
