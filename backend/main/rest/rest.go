@@ -41,7 +41,7 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	아래 경로는 사용자ID(userId)를 포함.
 	':id'는 변수 id를 의미(와일드카드)
 	*/
-	r.POST("/user/signout/:id",h.SignOut)
+	r.DELETE("/user/signout/:id",h.SignOut)
 
 	// 배포하는 과정에서 nginx를 사용하기로 함. 그래서, 백엔드에서 시작 페이지를 띄워주지 않아도 됨.
 	//r.Use(static.Serve("/",static.LocalFile("../../frontend/build", true)))

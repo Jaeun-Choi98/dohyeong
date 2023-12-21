@@ -3,7 +3,6 @@ package dblayer
 import (
 	"backend/main/models"
 	"database/sql"
-	"errors"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -74,13 +73,30 @@ func (msdb *MYSQLDB)checkEmail(email string)(bool){
 	return true
 }
 
+func hashPassword(s *string) error{
+	
+	sBytes := []byte(*s)
+	
+	//Obtain hashed password
+	hashedBytes, err := bcrypt.GenerateFromPassword(sBytes, bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	//update password string with the hashed version
+	*s = string(hashedBytes[:])
+	return nil
+}
+
 func (msdb *MYSQLDB)SignInUser(email, password string)(models.User,error){
 	user := &models.User{}
 	err := msdb.db.QueryRow("select user_id, email, password, user_name, logged_in, admin from user where email = ?", email).
 	Scan(&user.UserId,&user.Email,&user.Password,&user.UserName,&user.LoggedIn,&user.Admin)
-	if err != nil{
-		return *user, err
+	
+	if err != nil {
+		return *user, ErrNOTEXISTINGEMAIL
 	}
+	
 	if checkPassword(user.Password,password){
 		return *user, ErrINVALIDPASSWORD
 	}
@@ -108,23 +124,5 @@ func (msdb *MYSQLDB)SignOutUserById(id int) error{
 	if num == 0{
 		return ErrEXPIREDSESSION
 	}
-	return nil
-}
-
-func hashPassword(s *string) error{
-	if s ==nil {
-		return errors.New("Password is empty")
-	}
-	
-	sBytes := []byte(*s)
-	
-	//Obtain hashed password
-	hashedBytes, err := bcrypt.GenerateFromPassword(sBytes, bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-
-	//update password string with the hashed version
-	*s = string(hashedBytes[:])
 	return nil
 }

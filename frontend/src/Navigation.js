@@ -6,7 +6,7 @@ export default function Navigation(props) {
     e.preventDefault();
     console.log('로그아웃: ' + props.user);
     fetch('/user/signout/' + props.user.userId, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
