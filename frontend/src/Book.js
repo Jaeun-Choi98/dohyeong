@@ -9,10 +9,14 @@ function Book(props) {
           <img src={props.imgUrl} alt={props.imgAlt} />
           <div className='product-details'>
             <h3>{props.bookName}</h3>
-            <p>{props.description}</p>
-            <p>{props.price}원</p>
+            <p>{props.description === '없음' ? '' : props.description}</p>
+            <p>{props.price === 0 ? '품절' : props.price + '원'}</p>
             <button>
-              <a href={props.link}>구매하러가기</a>
+              {props.link === '없음' ? (
+                <a>없음</a>
+              ) : (
+                <a href={props.link}>구매하러가기</a>
+              )}
             </button>
           </div>
         </div>

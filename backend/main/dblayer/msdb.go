@@ -29,7 +29,7 @@ func (msdb *MYSQLDB)CloseMysql(){
 }
 
 func (msdb *MYSQLDB)GetAllBooks()([]models.Book, error){
-	rows, err := msdb.db.Query("select book_id, img_url, img_alt, book_name, price, link from book")
+	rows, err := msdb.db.Query("select book_id, img_url, img_alt, book_name, price, link, description from book")
 	if err != nil{
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (msdb *MYSQLDB)GetAllBooks()([]models.Book, error){
 	books = make([]models.Book, 0)
 	for rows.Next(){
 		book = new(models.Book)
-		err := rows.Scan(&book.BookId, &book.ImgUrl, &book.ImgAlt, &book.BookName, &book.Price, &book.Link)
+		err := rows.Scan(&book.BookId, &book.ImgUrl, &book.ImgAlt, &book.BookName, &book.Price, &book.Link, &book.Description)
 		if err != nil{
 			return nil, err
 		}
@@ -90,10 +90,10 @@ func hashPassword(s *string) error{
 
 func (msdb *MYSQLDB)SignInUser(email, password string)(models.User,error){
 	user := &models.User{}
-	err := msdb.db.QueryRow("select user_id, email, password, user_name, logged_in, admin from user where email = ?", email).
+	row := msdb.db.QueryRow("select user_id, email, password, user_name, logged_in, admin from user where email = ?", email).
 	Scan(&user.UserId,&user.Email,&user.Password,&user.UserName,&user.LoggedIn,&user.Admin)
 	
-	if err != nil {
+	if row != nil {
 		return *user, ErrNOTEXISTINGEMAIL
 	}
 	
@@ -101,7 +101,7 @@ func (msdb *MYSQLDB)SignInUser(email, password string)(models.User,error){
 		return *user, ErrINVALIDPASSWORD
 	}
 
-	_,err = msdb.db.Exec("update user set logged_in=1 where user_id=?",user.UserId)
+	_,err := msdb.db.Exec("update user set logged_in=1 where user_id=?",user.UserId)
 	if err != nil{
 		return *user, err
 	}
