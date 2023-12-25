@@ -145,9 +145,36 @@ stateDiagram
 ```
 
 <br>
+<br>
+
+## 서버
+
+네이버 클라우드 VPC 서비스를 활용하여 서버를 구축했습니다. 네이버 클라우드 VPC는 직접 네트워크를 설계할 수 있어 서버 구축이 더 유연해집니다. private subnet에서는 사설망 내의 서버만 통신이 가능하기 때문에, SSL VPN 서비스를 이용하거나 public subnet 서버에 접속한 후에 private subnet 서버에 접속하는 방법 등을 활용해야 합니다. 또는 private subnet 서버에 새 NIC를 할당하여 public subnet에 바인딩하여 공인 IP를 받는 방법(제 생각이라 틀린 방법일 수도 있습니다.)도 고려할 수 있습니다. 개발 시 불편함을 줄이기 위해 현재는 public subnet에 또 다른 DB 서버를 생성하고 공인 IP를 할당하여 개발 및 배포 중에 있습니다.
+
+```mermaid
+flowchart TD
+subgraph VPC
+	subgraph private-subnet
+	db[(DB-server)]
+	end
+	subgraph public-subnet
+	application-server
+	end
+	application-server -- request --> db
+end
+direction LR
+subgraph Gateway
+	Internet-Gateway <-- inbound-and-outbound --> public-subnet
+	private-subnet -- only-outbound --> NAT-Gateway
+end
+Internet <-- communication --> Internet-Gateway
+Internet <-- communication --> NAT-Gateway 
+	
+```
+
+<br>
 
 ## 배포
-
 
 
 1. **Dockerfile 이미지 빌드 방법 작성**
