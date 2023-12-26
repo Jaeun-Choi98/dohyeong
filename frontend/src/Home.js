@@ -9,11 +9,11 @@ export default function Home() {
         <p>
           경력 사항
           <br />
-          개똥벌레
+          AAA
         </p>
       </div>
       <div className='bio'>
-        <h2>안녕하세요. 교재개발 달인 김도형입니다.</h2>
+        <h2>안녕하세요. XXX 입니다.</h2>
         <hr />
         <ul>
           <li>
@@ -32,36 +32,24 @@ export default function Home() {
             노력합니다. 더 나아가 함께 성장하는 것을 추구합니다.
           </li>
         </ul>
+        <br></br>
         <h2>Skill</h2>
         <hr />
         <ul>
           <li>
-            <strong>Java</strong>
+            <strong>TEST1</strong>
             <br />
-            자바를 사용한 알고리즘 풀이를 통해 자바의 숙련도를 높였고 자바
-            스프링 프레임워크를 활용한 웹 개발 경험이 있습니다.
+            TEST1...
           </li>
           <li>
-            <strong>Python</strong>
+            <strong>TEST2</strong>
             <br />
-            쓰레드(thread) 및 이벤트 객체(event object)를 사용하여 임베디드
-            시스템을 개발한 경험이 있습니다.
+            TEST2...
           </li>
           <li>
-            <strong>C/C++</strong>
+            <strong>TEST3</strong>
             <br />
-            소켓 프로그래밍을 통해 네트워크 프로젝트를 진행한 경험이 있습니다.
-          </li>
-          <li>
-            <strong>Git/GitHub</strong>
-            <br />
-            프로젝트 및 개인 코드를 관리하고 있습니다.
-          </li>
-          <li>
-            <strong>Linux</strong>
-            <br />
-            임베디드 시스템 개발에 활용한 경험이 있으며, 원격 서버에서 실습한
-            경험이 있습니다. 리눅스 파일 구조에 대해 익숙한 편입니다.
+            TEST3...
           </li>
         </ul>
       </div>
