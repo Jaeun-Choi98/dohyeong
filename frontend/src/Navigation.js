@@ -32,10 +32,10 @@ export default function Navigation(props) {
       <nav>
         <div className='logo'></div>
         <ul className='nav-links'>
-          <li>
+          <li className='nav-item'>
             <Link to='/'>프로필</Link>
           </li>
-          <li>
+          <li className='nav-item'>
             <Link to='/book'>교재</Link>
           </li>
           {props.user.admin ? null : null}
