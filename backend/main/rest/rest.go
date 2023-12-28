@@ -46,6 +46,11 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	// 배포하는 과정에서 nginx를 사용하기로 함. 그래서, 백엔드에서 시작 페이지를 띄워주지 않아도 됨.
 	//r.Use(static.Serve("/",static.LocalFile("../../frontend/build", true)))
 	
+	/*
+	모든 게시글을 반환
+	*/
+	r.GET("/boards", h.GetBoards)
+
 	return r.Run(address)
 }
 

@@ -126,3 +126,26 @@ func (msdb *MYSQLDB)SignOutUserById(id int) error{
 	}
 	return nil
 }
+
+func (msdb *MYSQLDB)GetAllBoards()([]models.Board, error){
+	rows, err := msdb.db.Query("select board_id, title, content, writer_name from board")
+	if err != nil{
+		return nil, err
+	}
+	defer rows.Close()
+
+	var boards []models.Board
+	var board *models.Board
+	boards = make([]models.Board, 0)
+
+	for rows.Next(){
+		board = new(models.Board)
+		err := rows.Scan(&board.BoardId, &board.Title, &board.Content, &board.WriterName)
+		if err != nil{
+			return nil, err
+		}
+		boards = append(boards, *board)
+	}
+
+	return boards, err
+}

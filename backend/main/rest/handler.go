@@ -14,6 +14,7 @@ type HandlerInterface interface{
 	SignIn(c *gin.Context)
 	AddUser(c *gin.Context)
 	SignOut(c *gin.Context)
+	GetBoards(c *gin.Context)
 }
 
 type Handler struct{

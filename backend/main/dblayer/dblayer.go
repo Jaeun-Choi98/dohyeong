@@ -7,9 +7,10 @@ import (
 
 type DBLayer interface{
 	GetAllBooks()([]models.Book, error)
-	AddUser(models.User)(error)
+	AddUser(models.User) error
 	SignInUser(userName, password string)(models.User,error)
 	SignOutUserById(int) error
+	GetAllBoards()([]models.Board, error)
 }
 
 var ErrINVALIDPASSWORD = errors.New("비밀번호가 일치하지 않습니다.")

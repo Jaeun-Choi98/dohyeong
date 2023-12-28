@@ -23,3 +23,10 @@ type User struct{
 	LoggedIn int `json:"loggedIn"`
 	Admin int `json:"admin"`
 }
+
+type Board struct{
+	BoardId int `json:"boardId"`
+	Title string `json:"title"`
+	Content string `json:"content"`
+	WriterName string `json:"writerName"`
+}
