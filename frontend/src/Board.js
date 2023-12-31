@@ -5,7 +5,7 @@ export function BoardDetail() {
   let { boardId } = useParams();
   const [board, setBoard] = useState([]);
   useEffect(() => {
-    fetch('/board/' + boardId)
+    fetch('/boards/' + boardId)
       .then((res) => res.json())
       .then((result) => {
         setBoard(result);
@@ -81,7 +81,7 @@ export function BoardList(props) {
         },
       });
       if (response.ok) {
-        window.location.reload();
+        //window.location.reload();
       } else {
         console.error('삭제 실패');
       }
