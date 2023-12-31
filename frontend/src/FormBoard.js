@@ -35,7 +35,7 @@ export default function FormBoard(props) {
         }
       });
     navigate('/board', true);
-    //window.location.reload();
+    window.location.reload();
   };
 
   return (

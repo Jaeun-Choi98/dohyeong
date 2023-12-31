@@ -89,7 +89,7 @@ erDiagram
 - Home 컴포넌트: 자기소개 페이지
 - Book 컴포넌트: 교재 리스트를 보여줄 페이지
 - Board 컴포넌트: 게시글 목록과 게시글 상세 내용을 보여줄 페이지
-- Navigation 컴포넌트: 페이지 이동을 위한 상단 메뉴(Link를 통한 SSR)
+- Navigation 컴포넌트: 페이지 이동을 위한 상단 메뉴(Link를 통한 CSR)
 - modalwindows 컴포넌트: 로그인 및 회원가입을 위한 모달 윈도우
 - FormBoard 컴포넌트: 게시글 생성을 위한 입력 폼
 - …

@@ -81,7 +81,7 @@ export function BoardList(props) {
         },
       });
       if (response.ok) {
-        //window.location.reload();
+        window.location.reload();
       } else {
         console.error('삭제 실패');
       }
