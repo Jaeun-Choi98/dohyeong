@@ -5,7 +5,7 @@ export default function Navigation(props) {
   const logOut = (e) => {
     e.preventDefault();
     console.log('로그아웃: ' + props.user);
-    fetch('/user/signout/' + props.user.userId, {
+    fetch('/users/signout/' + props.user.userId, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
