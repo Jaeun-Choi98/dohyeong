@@ -149,3 +149,33 @@ func (msdb *MYSQLDB)GetAllBoards()([]models.Board, error){
 
 	return boards, err
 }
+
+func (msdb *MYSQLDB) GetBoardById(id int) (models.Board, error) {
+	var board *models.Board
+	err := msdb.db.QueryRow("select board_id, title, content, writer_name from board where board_id=?",id).
+	Scan(&board.BoardId, &board.Title, &board.Content, &board.WriterName)
+
+	if err != nil{
+		return *board, err
+	}
+	
+	return *board, err
+}
+
+func (msdb *MYSQLDB) AddBoard(board models.Board) error {
+	_,err := msdb.db.Exec("insert into board(title, content, writer_name) values(?,?,?)",
+	board.Title, board.Content, board.WriterName)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (msdb *MYSQLDB) RemoveBoardById(id int) error {
+	_, err :=msdb.db.Exec("delete from board where board_id=?",id)
+	if err != nil{
+		return err
+	}
+	
+	return nil
+}

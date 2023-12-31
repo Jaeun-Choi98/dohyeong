@@ -34,7 +34,7 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	r.POST("/users/signin", h.SignIn)
 
 	// 사용자 신규 가입
-	r.POST("/users",h.AddUser)
+	r.POST("/users/new",h.AddUser)
 
 	/*
 	해당 ID의 사용자 로그아웃
@@ -51,6 +51,21 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	*/
 	r.GET("/boards", h.GetBoards)
 
+	/*
+	해당 ID의 게시글 반환
+	*/
+	r.GET("/board/:id", h.GetBoard)
+
+	/*
+	새로운 게시글 생성
+	*/
+	r.POST("/boards/new", h.AddBoard)
+
+	/*
+	해당 ID의 게시글 삭제
+	*/
+	r.DELETE("/boards/delete/:id", h.RemoveBoard)
+	
 	return r.Run(address)
 }
 

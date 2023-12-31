@@ -13,7 +13,6 @@ export default function Navigation(props) {
       },
     });
     props.logOut();
-    console.log('<Nav> logOut onClick event');
   };
 
   const loggedInMenu = () => {
@@ -38,7 +37,6 @@ export default function Navigation(props) {
           <li className='nav-item'>
             <Link to='/book'>교재</Link>
           </li>
-          {props.user.admin ? null : null}
           <li>
             <Link to='/board'>게시판</Link>
           </li>

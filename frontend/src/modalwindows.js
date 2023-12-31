@@ -132,7 +132,7 @@ export function RegisterForm(props) {
       password: pass1,
       userName: name,
     };
-    submitRequest('/users', requestBody, props.signIn, handleError);
+    submitRequest('/users/new', requestBody, props.signIn, handleError);
     console.log('회원가입 Form: ' + requestBody);
   };
 

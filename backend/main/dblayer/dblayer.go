@@ -11,6 +11,9 @@ type DBLayer interface{
 	SignInUser(userName, password string)(models.User,error)
 	SignOutUserById(int) error
 	GetAllBoards()([]models.Board, error)
+	GetBoardById(int) (models.Board, error)
+	AddBoard(models.Board) error
+	RemoveBoardById(int) error
 }
 
 var ErrINVALIDPASSWORD = errors.New("비밀번호가 일치하지 않습니다.")
