@@ -10,6 +10,7 @@ export default function FormBoard(props) {
   const navigate = useNavigate();
 
   const handleChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };

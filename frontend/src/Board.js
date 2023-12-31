@@ -70,6 +70,7 @@ export function BoardDetail() {
 
 export function BoardList(props) {
   const delBoard = async (e) => {
+    e.preventDefault();
     try {
       console.log('삭제: ' + props.title);
       const response = await fetch('/boards/delete/' + props.boardId, {
