@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './Navigation.css';
 
 export default function Navigation(props) {
+  const token = localStorage.getItem('token');
   const logOut = (e) => {
     e.preventDefault();
     console.log('로그아웃: ' + props.user);
@@ -10,6 +11,7 @@ export default function Navigation(props) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
     props.logOut();

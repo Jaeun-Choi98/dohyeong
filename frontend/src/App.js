@@ -15,8 +15,8 @@ export default function App() {
   const _user = { loggedIn: 0 };
   const [user, setUser] = useState(_user);
   const signIn = (object) => {
+    console.log(object);
     if (object.loggedIn === 1) {
-      console.log('로그인 중');
       const newUser = {
         userId: object.userId,
         userName: object.userName,
@@ -30,6 +30,11 @@ export default function App() {
       localStorage.setItem('userId', object.userId);
       localStorage.setItem('userName', object.userName);
       localStorage.setItem('admin', object.admin);
+
+      // 토큰 정보도 저장
+      localStorage.setItem('token', object.token);
+
+      console.log('로그인 성공');
     } else {
       console.log('회원가입 성공');
     }

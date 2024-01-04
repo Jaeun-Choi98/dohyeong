@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 function submitRequest(path, requestBody, handleSignedIn, handleError) {
@@ -27,6 +27,7 @@ export function SingInForm(props) {
   const [errormsg, setErrormsg] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const inputRef = useRef();
 
   // 사용자가 데이터 입력하면 호출
   const handleChange = (e) => {
@@ -37,6 +38,11 @@ export function SingInForm(props) {
       setPassword(e.target.value);
     }
   };
+
+  // 컴포넌트 렌더링 시 자동으로 커서가 포커스 되도록
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   // 폼을 제출하면 호출
   const handleSubmit = (e) => {
@@ -66,6 +72,7 @@ export function SingInForm(props) {
         <label htmlFor='email'>Email:</label>
         <br />
         <input
+          ref={inputRef}
           type='email'
           id='email'
           name='email'
@@ -104,6 +111,12 @@ export function RegisterForm(props) {
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
   const [name, setName] = useState('');
+  const inputRef = useRef();
+
+  // 컴포넌트 렌더링 시 자동적으로 커서가 포커스 되도록
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   // 사용자가 데이터 입력하면 호출
   const handleChange = (e) => {
@@ -153,6 +166,7 @@ export function RegisterForm(props) {
         <label htmlFor='name'>닉네임:</label>
         <br />
         <input
+          ref={inputRef}
           type='text'
           id='name'
           name='name'

@@ -69,6 +69,7 @@ export function BoardDetail() {
 }
 
 export function BoardList(props) {
+  const token = localStorage.getItem('token');
   const delBoard = async (e) => {
     e.preventDefault();
     try {
@@ -78,6 +79,7 @@ export function BoardList(props) {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.ok) {

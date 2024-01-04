@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"backend/main/middleware"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,10 @@ func RunAPI(address string) error{
 
 func RunAPIWithHandler(address string, h HandlerInterface) error{
 	r := gin.Default()
-	r.Use(MyCustomLogger())
+	r.Use(middleware.MyCustomLogger())
+	// r.Use(gin.BasicAuth(gin.Accounts{
+	// 	"test": "test1",
+	// }))
 
 	// 로드 홈페이지
 	//r.GET("/", h.GetMainPage)
@@ -41,7 +45,7 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	아래 경로는 사용자ID(userId)를 포함.
 	':id'는 변수 id를 의미(와일드카드)
 	*/
-	r.DELETE("/users/signout/:id",h.SignOut)
+	r.DELETE("/users/signout/:id",middleware.AuthUserMiddleware(), h.SignOut)
 
 	// 배포하는 과정에서 nginx를 사용하기로 함. 그래서, 백엔드에서 시작 페이지를 띄워주지 않아도 됨.
 	//r.Use(static.Serve("/",static.LocalFile("../../frontend/build", true)))
@@ -59,24 +63,12 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	/*
 	새로운 게시글 생성
 	*/
-	r.POST("/boards/new", h.AddBoard)
+	r.POST("/boards/new", middleware.AuthAdminMiddleware(), h.AddBoard)
 
 	/*
 	해당 ID의 게시글 삭제
 	*/
-	r.DELETE("/boards/delete/:id", h.RemoveBoard)
+	r.DELETE("/boards/delete/:id", middleware.AuthAdminMiddleware(), h.RemoveBoard )
 
 	return r.Run(address)
-}
-
-func MyCustomLogger() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("************************************")
-		c.Next()
-		// gin은 기본적으로 로거 미들웨어와 리커버리 미들웨어를 제공해서 아래 코드는 필요가 없지만,
-		// 추가 확장을 위한 예시 코드
-		status := c.Writer.Status()
-		fmt.Println(status)
-		fmt.Println("************************************")
-	}
 }

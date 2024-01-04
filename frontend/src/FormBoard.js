@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 export default function FormBoard(props) {
   const [formData, setFormData] = useState({
     title: '',
@@ -8,12 +8,19 @@ export default function FormBoard(props) {
   });
 
   const navigate = useNavigate();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const token = localStorage.getItem('token');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,6 +30,7 @@ export default function FormBoard(props) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(formData),
     })
@@ -46,6 +54,7 @@ export default function FormBoard(props) {
             제목
           </label>
           <input
+            ref={inputRef}
             type='text'
             className='form-control'
             id='title'
@@ -73,6 +82,11 @@ export default function FormBoard(props) {
         </div>
         <button type='submit' className='btn btn-dark m-3'>
           제출
+        </button>
+        <button className='btn btn-dark'>
+          <Link to='/board' style={{ textDecoration: 'none', color: 'white' }}>
+            뒤로 가기
+          </Link>
         </button>
       </form>
     </div>

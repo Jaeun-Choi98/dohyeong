@@ -10,6 +10,7 @@ export default function Home(props) {
           <div className='alert alert-dark' role='alert'>
             회원 가입 시, 실제 이메일을 넣지 않아도 됩니다. 그리고, 자주
             사용하는 비밀번호로 설정하지 말아 주세요!!
+            <strong>(++로그인을 했다면, 꼭 로그아웃을 해주세요!!)</strong>
             <button
               type='button'
               className='btn-close mx-5'
@@ -55,7 +56,7 @@ export default function Home(props) {
           <hr />
           <ul>
             <li>
-              eam Plume은 수능 지리 컨텐츠를 전문적으로 제작하는 팀으로 수능
+              Team Plume은 수능 지리 컨텐츠를 전문적으로 제작하는 팀으로 수능
               지리 만점을 위한 고퀄리티 컨텐츠를 제작합니다.
             </li>
             {/* 나머지 내용... */}
