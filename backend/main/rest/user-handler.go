@@ -8,26 +8,11 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 func (h *Handler) SignIn(c *gin.Context) {
-	// if h.db == nil {
-	// 	return
-	// }
-	// var user models.User
-	// err := c.ShouldBindJSON(&user)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// user, err = h.db.SignInUser(user.Email, user.Password)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// c.JSON(http.StatusOK, user)
+	
 	if h.db == nil {
     return
 	}
@@ -87,6 +72,14 @@ func (h *Handler) AddUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	validate := validator.New()
+	if err := validate.Struct(user); err != nil {
+		fmt.Println("Validation error:", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "닉네임은 50글자 이내로 작성해주세요."})
+		return
+	}
+
 	err = h.db.AddUser(user)
 	if err != nil {
 		fmt.Println(err)

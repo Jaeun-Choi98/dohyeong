@@ -1,23 +1,80 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-export function BoardDetail() {
+export function BoardDetail(props) {
   let { boardId } = useParams();
+  const token = localStorage.getItem('token');
   const [board, setBoard] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [inputComment, setInputComment] = useState('');
+
+  const delComment = async (event, commentId) => {
+    event.preventDefault();
+    try {
+      console.log('삭제: ' + props.title);
+      const response = await fetch('/comments/delete/' + commentId, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        console.error('삭제 실패');
+      }
+    } catch (error) {
+      console.error('요청 실패:', error);
+    }
+    window.location.reload();
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await fetch('/comments/new', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: parseInt(props.user.userId, 10),
+        boardId: parseInt(boardId, 10),
+        content: inputComment,
+        writerName: props.user.userName,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.error === undefined) {
+          console.log('서버에 보낸 데이터:', json);
+        } else {
+          console.log(json.error);
+        }
+      });
+    window.location.reload();
+  };
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    setInputComment(event.target.value);
+  };
+
   useEffect(() => {
     fetch('/boards/' + boardId)
       .then((res) => res.json())
       .then((result) => {
         setBoard(result);
       });
+    fetch('/comments/' + boardId)
+      .then((res) => res.json())
+      .then((result) => {
+        setComments(result);
+      });
   }, []);
-
-  // 가상의 댓글 데이터
-  const [comments] = useState([
-    { id: 1, content: '댓글 기능 개발 중1' },
-    { id: 2, content: '댓글 기능 개발 중2' },
-    // ... (다른 댓글 정보)
-  ]);
 
   return (
     <div className='container mt-4'>
@@ -29,11 +86,24 @@ export function BoardDetail() {
               <br />
               <p className='card-text'>{board.content}</p>
 
-              {/* 댓글 목록 */}
               <div className='comments mt-5 pt-5'>
+                <div className='m-3'>
+                  <strong>댓글 목록</strong>
+                </div>
                 {comments.map((comment) => (
-                  <div key={comment.id} className='card mb-2'>
-                    <div className='card-body'>{comment.content}</div>
+                  <div key={comment.commentId} className='card mb-2'>
+                    <div className='card-body'>
+                      {comment.writerName}: {comment.content}
+                    </div>
+                    {props.user.admin === 1 ? (
+                      <button
+                        onClick={(event) =>
+                          delComment(event, comment.commentId)
+                        }
+                      >
+                        삭제
+                      </button>
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -43,11 +113,19 @@ export function BoardDetail() {
                   <div className='form-group'>
                     <textarea
                       className='form-control'
+                      required
+                      id='comment'
+                      name='comment'
+                      onChange={handleChange}
                       rows='3'
                       placeholder='댓글 입력하기...'
                     ></textarea>
                   </div>
-                  <button type='submit' className='btn btn-dark mt-3'>
+                  <button
+                    type='submit'
+                    className='btn btn-dark mt-3'
+                    onClick={handleSubmit}
+                  >
                     댓글 달기
                   </button>
                   <button className='btn btn-dark mt-3 mx-3'>

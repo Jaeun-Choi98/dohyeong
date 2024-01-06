@@ -70,5 +70,20 @@ func RunAPIWithHandler(address string, h HandlerInterface) error{
 	*/
 	r.DELETE("/boards/delete/:id", middleware.AuthAdminMiddleware(), h.RemoveBoard )
 
+
+	/*
+	해당 게시판 ID의 댓글 반환
+	*/
+	r.GET("/comments/:id", h.GetComments)
+	
+	/*
+	새로운 댓글 생성
+	*/
+	r.POST("/comments/new",middleware.AuthUserMiddleware(), h.AddComment)
+
+	/*
+	해당 ID의 댓글 삭제
+	*/
+	r.DELETE("/comments/delete/:id",middleware.AuthAdminMiddleware(), h.RemoveComment)
 	return r.Run(address)
 }

@@ -18,6 +18,9 @@ type HandlerInterface interface{
 	GetBoard(c *gin.Context)
 	AddBoard(c *gin.Context)
 	RemoveBoard(c *gin.Context)
+	AddComment(c *gin.Context)
+	GetComments(c *gin.Context)
+	RemoveComment(c *gin.Context)
 }
 
 type Handler struct{

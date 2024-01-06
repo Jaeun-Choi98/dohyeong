@@ -30,8 +30,8 @@
   게시글 삭제(o)
   게시글 수정(x)
 - 댓글
-  게시글에 작성(x)
-  관리자만 댓글 삭제 가능(x)
+  게시글에 작성(o)
+  관리자만 댓글 삭제 가능(o)
   대댓글(x)
 
 <br>
@@ -71,6 +71,7 @@ erDiagram
 		int comment_id
 		int board_id
 		int user_id
+		string write_name
 		string content
 	}
 

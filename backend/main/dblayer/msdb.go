@@ -3,6 +3,7 @@ package dblayer
 import (
 	"backend/main/models"
 	"database/sql"
+	"fmt"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -49,11 +50,12 @@ func (msdb *MYSQLDB)GetAllBooks()([]models.Book, error){
 	return books, nil
 }
 
+// user table
 func (msdb *MYSQLDB)AddUser(user models.User)(error){
 	// AddUser 이전에 DB에 있는 email일 경우, 가입 x -> 디스크 메모리에 접근하기 전에 램 메모리에서 확인할 필요가 있음.
 	// 일단은 DB에 직접 조회를 해서 구현.
-	if msdb.checkEmail(user.Email) {
-		return ErrEXISTINGEMAIL
+	if err := msdb.checkEmailAndName(user.Email, user.UserName); err != nil {
+		return err
 	}
 	hashPassword(&user.Password)
 	_,err := msdb.db.Exec("insert into user(email,password,user_name,logged_in,admin) values(?,?,?,?,?)",
@@ -64,13 +66,19 @@ func (msdb *MYSQLDB)AddUser(user models.User)(error){
 	return nil
 }
 
-func (msdb *MYSQLDB)checkEmail(email string)(bool){
+func (msdb *MYSQLDB)checkEmailAndName(email, userName string)(error){
 	var check string
 	msdb.db.QueryRow("select email from user where email = ?",email).Scan(&check)
-	if check == ""{
-		return false
+	fmt.Println(check != "")
+	if check != ""{
+		return ErrEXISTINGEMAIL
 	}
-	return true
+	msdb.db.QueryRow("select user_name from user where user_name = ?",userName).Scan(&check)
+	fmt.Println(check)
+	if check != ""{
+		return ErrEXISTINGNAME
+	}
+	return nil
 }
 
 func hashPassword(s *string) error{
@@ -127,6 +135,7 @@ func (msdb *MYSQLDB)SignOutUserById(id int) error{
 	return nil
 }
 
+// board table
 func (msdb *MYSQLDB)GetAllBoards()([]models.Board, error){
 	rows, err := msdb.db.Query("select board_id, title, content, writer_name from board")
 	if err != nil{
@@ -177,5 +186,46 @@ func (msdb *MYSQLDB) RemoveBoardById(id int) error {
 		return err
 	}
 	
+	return nil
+}
+
+// comment table
+func (msdb *MYSQLDB) AddComment(comment models.Comment) error {
+	_,err := msdb.db.Exec("insert into comment(comment_id, board_id, user_id, content, writer_name) values(?,?,?,?,?)",
+	comment.CommentId, comment.BoardId, comment.UserId, comment.Content, comment.WriterName)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (msdb *MYSQLDB) GetCommentByBoardId(id int) ([]models.Comment, error) {
+	rows, err := msdb.db.Query("select comment_id, board_id, user_id, content, writer_name from comment where board_id=?",id)
+	if err != nil{
+		return nil, err
+	}
+	defer rows.Close()
+
+	var comments []models.Comment
+	var comment *models.Comment
+	comments = make([]models.Comment, 0)
+
+	for rows.Next(){
+		comment = new(models.Comment)
+		err := rows.Scan(&comment.CommentId, &comment.BoardId, &comment.UserId, &comment.Content, &comment.WriterName)
+		if err != nil{
+			return nil, err
+		}
+		comments = append(comments, *comment)
+	}
+
+	return comments, err
+}
+
+func (msdb *MYSQLDB) RemoveCommentById(id int) error {
+	_, err :=msdb.db.Exec("delete from comment where comment_id=?",id)
+	if err != nil{
+		return err
+	}
 	return nil
 }

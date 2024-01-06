@@ -15,7 +15,6 @@ export default function App() {
   const _user = { loggedIn: 0 };
   const [user, setUser] = useState(_user);
   const signIn = (object) => {
-    console.log(object);
     if (object.loggedIn === 1) {
       const newUser = {
         userId: object.userId,
@@ -109,7 +108,10 @@ export default function App() {
           element={<BoardContainer loc='/boards' user={user} />}
         ></Route>
         <Route path='*' Component={ErrorNotFoundPage}></Route>
-        <Route path='/board/:boardId' element={<BoardDetail />}></Route>
+        <Route
+          path='/board/:boardId'
+          element={<BoardDetail user={user} />}
+        ></Route>
         <Route path='/board/new' element={<FormBoard user={user} />}></Route>
       </Routes>
       <SignInModalWindow

@@ -15,6 +15,10 @@ var(
 	books []models.Book
 	bookMu sync.Mutex
 	bookLoaded bool
+
+	// comment-handler
+	comments map[int][]models.Comment
+	commentMu sync.Mutex
 )
 
 func SetBooks(newValue []models.Book){
