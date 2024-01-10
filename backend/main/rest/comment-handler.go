@@ -10,7 +10,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func (h *Handler) AddComment(c *gin.Context){
+func (h *Handler) AddComment(c *gin.Context) {
 	if h.db == nil {
 		return
 	}
@@ -40,8 +40,8 @@ func (h *Handler) AddComment(c *gin.Context){
 	c.JSON(http.StatusOK, comment)
 }
 
-func (h *Handler) GetComments(c *gin.Context){
-	if h.db == nil{
+func (h *Handler) GetComments(c *gin.Context) {
+	if h.db == nil {
 		return
 	}
 
@@ -52,7 +52,7 @@ func (h *Handler) GetComments(c *gin.Context){
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
+
 	comments, err := h.db.GetCommentByBoardId(id)
 
 	if err != nil {
@@ -60,11 +60,11 @@ func (h *Handler) GetComments(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	
+
 	c.JSON(http.StatusOK, comments)
 }
 
-func (h *Handler) RemoveComment(c *gin.Context){
+func (h *Handler) RemoveComment(c *gin.Context) {
 	if h.db == nil {
 		return
 	}

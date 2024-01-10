@@ -13,7 +13,7 @@ func MyCustomLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		fmt.Println("************************************")
 		c.Next()
-		fmt.Printf("클라이언트 주소: %s \n",c.ClientIP())
+		fmt.Printf("클라이언트 주소: %s \n", c.ClientIP())
 		fmt.Println("************************************")
 	}
 }
@@ -22,10 +22,10 @@ func AuthUserMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization") // 클라이언트에서 헤더로 JWT 전달
 		if tokenString == "" {
-				fmt.Println("인증되지 않은 요청")
-				c.JSON(http.StatusUnauthorized, gin.H{"err": "인증되지 않은 요청"})
-				c.Abort()
-				return
+			fmt.Println("인증되지 않은 요청")
+			c.JSON(http.StatusUnauthorized, gin.H{"err": "인증되지 않은 요청"})
+			c.Abort()
+			return
 		}
 		// 토큰 블랙리스트에 있는지 확인
 		// if _, ok := blacklist[tokenString]; ok {
@@ -38,14 +38,14 @@ func AuthUserMiddleware() gin.HandlerFunc {
 		secretKey := "JWT_SECRET_KEY"
 
 		token, err := jwt.Parse(strings.Split(tokenString, " ")[1], func(token *jwt.Token) (interface{}, error) {
-				return []byte(secretKey), nil
+			return []byte(secretKey), nil
 		})
 
 		if err != nil || !token.Valid {
-				fmt.Println("유효하지 않은 토큰")
-				c.JSON(http.StatusUnauthorized, gin.H{"err": "유효하지 않은 토큰"})
-				c.Abort()
-				return
+			fmt.Println("유효하지 않은 토큰")
+			c.JSON(http.StatusUnauthorized, gin.H{"err": "유효하지 않은 토큰"})
+			c.Abort()
+			return
 		}
 
 		c.Next()

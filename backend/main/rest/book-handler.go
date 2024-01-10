@@ -14,7 +14,7 @@ func (h *Handler) GetBooks(c *gin.Context) {
 	}
 
 	// 첫 요청에만 DB서버에 데이터를 불러옴.
-	if utils.GetBooks() == nil{
+	if utils.GetBooks() == nil {
 		newBooks, err := h.db.GetAllBooks()
 		utils.SetBooks(newBooks)
 		if err != nil {
@@ -23,7 +23,7 @@ func (h *Handler) GetBooks(c *gin.Context) {
 			return
 		}
 	}
-	
+
 	books := utils.GetBooks()
 	c.JSON(http.StatusOK, books)
 }

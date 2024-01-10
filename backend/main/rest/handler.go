@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type HandlerInterface interface{
+type HandlerInterface interface {
 	GetMainPage(c *gin.Context)
 	GetBooks(c *gin.Context)
 	SignIn(c *gin.Context)
@@ -23,24 +23,24 @@ type HandlerInterface interface{
 	RemoveComment(c *gin.Context)
 }
 
-type Handler struct{
+type Handler struct {
 	db dblayer.DBLayer
 }
 
 // host.docker.internal
 // qwe:123qweasdzxc
-func NewHandler() (HandlerInterface, error){
-	return newHandlerWithParams("mysql","qwe:123qweasdzxc@tcp(10.1.0.7:3306)/dohyeong")
+func NewHandler() (HandlerInterface, error) {
+	return newHandlerWithParams("mysql", "qwe:123qweasdzxc@tcp(10.1.0.7:3306)/dohyeong")
 }
 
-func newHandlerWithParams(dbName, con string)(HandlerInterface, error){
+func newHandlerWithParams(dbName, con string) (HandlerInterface, error) {
 	msdb, err := dblayer.NewMysql(dbName, con)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	return &Handler{
 		db: msdb,
-	},nil
+	}, nil
 
 }
 
@@ -48,4 +48,3 @@ func (h *Handler) GetMainPage(c *gin.Context) {
 	log.Println("Main page....")
 	fmt.Fprintf(c.Writer, "Main page for secure API!!")
 }
-

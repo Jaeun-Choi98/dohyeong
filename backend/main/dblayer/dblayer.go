@@ -5,12 +5,12 @@ import (
 	"errors"
 )
 
-type DBLayer interface{
-	GetAllBooks()([]models.Book, error)
+type DBLayer interface {
+	GetAllBooks() ([]models.Book, error)
 	AddUser(models.User) error
-	SignInUser(userName, password string)(models.User,error)
+	SignInUser(userName, password string) (models.User, error)
 	SignOutUserById(int) error
-	GetAllBoards()([]models.Board, error)
+	GetAllBoards() ([]models.Board, error)
 	GetBoardById(int) (models.Board, error)
 	AddBoard(models.Board) error
 	RemoveBoardById(int) error
