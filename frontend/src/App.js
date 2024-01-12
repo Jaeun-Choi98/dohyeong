@@ -9,6 +9,8 @@ import ErrorNotFoundPage from './ErrorNotFoundPage';
 import { SignInModalWindow } from './modalwindows';
 import FormBoard from './FormBoard';
 
+import WebSocket from './WebSocket';
+
 export default function App() {
   // 사용자 로그인 및 로그아웃을 위한 스테이트 및 함수
   // admin: 관리자를 위한 속성
@@ -34,6 +36,7 @@ export default function App() {
       localStorage.setItem('token', object.token);
 
       console.log('로그인 성공');
+      window.location.reload();
     } else {
       console.log('회원가입 성공');
     }
@@ -50,6 +53,7 @@ export default function App() {
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     localStorage.removeItem('admin');
+    localStorage.removeItem('token');
 
     window.location.reload();
   };
@@ -113,6 +117,7 @@ export default function App() {
           element={<BoardDetail user={user} />}
         ></Route>
         <Route path='/board/new' element={<FormBoard user={user} />}></Route>
+        <Route path='/ws' element={<WebSocket user={user} />}></Route>
       </Routes>
       <SignInModalWindow
         signIn={signIn}

@@ -42,6 +42,9 @@ export default function Navigation(props) {
           <li>
             <Link to='/board'>게시판</Link>
           </li>
+          <li>
+            <Link to='/ws'>채팅방</Link>
+          </li>
         </ul>
         {props.user.loggedIn === 1 ? (
           loggedInMenu()
