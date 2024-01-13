@@ -108,6 +108,7 @@ erDiagram
 - 백엔드는 모든 책 정보를 프론트엔드로 전달한다.
 - 백엔드는 모든 게시글 목록을 프론트엔드로 전달한다.
 - 벡엔드는 특정 게시글을 프론트엔드로 전달한다.
+- 백엔드는 채팅을 위한 웹 소켓 연결을 하고, 데이터를 송/수신한다.[chat-server](https://github.com/Jaeun-Choi98/web-socket-project)
 - …
 
 **POST**
@@ -131,16 +132,17 @@ erDiagram
 
 ```mermaid
 stateDiagram
-    direction LR
+    direction TB
 		Browser1 --> Internet
     Browser2 --> Internet
     Internet --> Nginx(ReverseProxy)
-    Nginx(ReverseProxy)--> BackendServer
+    Nginx(ReverseProxy)
     state Nginx(ReverseProxy) {
-      direction LR
 			localhost80 --> staticFile
-			localhost80/api... --> backendServer
+			localhost80/api...
     }
+		localhost80/api... --> WebServer
+		localhost80/api... --> ChatServer
 
 ```
 
