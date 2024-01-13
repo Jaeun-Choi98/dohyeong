@@ -117,7 +117,7 @@ export default function App() {
           element={<BoardDetail user={user} />}
         ></Route>
         <Route path='/board/new' element={<FormBoard user={user} />}></Route>
-        <Route path='/ws' element={<WebSocket user={user} />}></Route>
+        <Route path='/chat' element={<WebSocket user={user} />}></Route>
       </Routes>
       <SignInModalWindow
         signIn={signIn}
