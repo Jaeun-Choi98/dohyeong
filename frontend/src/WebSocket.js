@@ -18,7 +18,7 @@ const WebSocketComponent = (props) => {
 
   useEffect(() => {
     // WebSocket 연결 시 헤더에 Authorization 토큰 추가
-    socketRef.current = new WebSocket('/ws');
+    socketRef.current = new WebSocket(`ws://${window.location.hostname}/ws`);
 
     socketRef.current.addEventListener('open', (event) => {
       console.log('WebSocket connection opened');
