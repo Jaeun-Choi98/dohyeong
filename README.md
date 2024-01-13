@@ -93,6 +93,7 @@ erDiagram
 - Navigation 컴포넌트: 페이지 이동을 위한 상단 메뉴(Link를 통한 CSR)
 - modalwindows 컴포넌트: 로그인 및 회원가입을 위한 모달 윈도우
 - FormBoard 컴포넌트: 게시글 생성을 위한 입력 폼
+- WebSocket 컴포넌트: 채팅방 페이지
 - …
 
 <br>
