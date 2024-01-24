@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 export function BoardDetail(props) {
@@ -68,6 +68,7 @@ export function BoardDetail(props) {
       .then((res) => res.json())
       .then((result) => {
         setBoard(result);
+        console.log(result);
       });
     fetch('/comments/' + boardId)
       .then((res) => res.json())
@@ -84,7 +85,15 @@ export function BoardDetail(props) {
             <div className='card-body'>
               <h5 className='card-title'>{board.title}</h5>
               <br />
-              <p className='card-text'>{board.content}</p>
+              <p className='card-text'>
+                {board.content &&
+                  board.content.split('\n').map((line, idx) => (
+                    <Fragment key={idx}>
+                      {line}
+                      {idx !== board.content.length - 1 && <br />}
+                    </Fragment>
+                  ))}
+              </p>
 
               <div className='comments mt-5 pt-5'>
                 <div className='m-3'>
