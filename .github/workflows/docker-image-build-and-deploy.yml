@@ -30,6 +30,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
+            bash setup_server.sh
             docker stop webapp || true
             docker rm webapp || true              
             docker rmi jaeun/web-dohyeong:latest || true
